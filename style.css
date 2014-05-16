@@ -9,8 +9,13 @@ body  {
     text-align: center;
     height: 100%;
     overflow: hidden;
-    font-family:Arial, Verdana, sans-serif;
+    font-family: Arial, Verdana, sans-serif;
 }
+
+input {
+	font-family: Arial, Verdana, sans-serif;
+}
+
 
 /* *** Layout *** */
 
