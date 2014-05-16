@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+  <meta name="description" content="Personal blog site for chvck covering a range of topics but mostly bikes. chvck likes bikes." />
+  <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  
+  <title>Placar</title>
+  <link href="reset.css" rel="stylesheet" type="text/css" media="screen" />
+  <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+  
+  <script type="text/javascript" src="javascript/timer.js"></script>
+  <script type="text/javascript" src="javascript/jquery-min-1.8.2.js"></script>
+  <script type="text/javascript" src="javascript/inputmask/jquery.inputmask.js"></script>
+  <script type="text/javascript" src="javascript/inputmask/jquery.inputmask.extensions.js"></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <div id="top">
+      <input type="text" value="10:00" id="timer" />
+      <div id="controls">
+      <input type="button" value="Iniciar" class="scoreButton" id="start" />
+      <input type="button" value="Parar" class="scoreButton" id="pause" />
+      <input type="button" value="Reiniciar" class="scoreButton" id="restart" />
+      </div>
+    </div>
+    <div id="col1">
+      <input type="text" value="Casa" class="teamName" id="casa"/>
+      <input type="text" value="0" class="score" id="score1" />
+        <div class="scoreButtons">
+          <input type="button" value="-1 Ponto" class="scoreButton" id="decreaseTeam1" />
+          <input type="button" value="+1 Ponto" class="scoreButton" id="increaseTeam1" />
+          <input type="button" value="+2 Pontos" class="scoreButton" id="increase2Team1" />
+          <input type="button" value="+3 Pontos" class="scoreButton" id="increase3Team1" />
+        </div>
+        <div id="faltas">
+		<h4 class="teamName">Faltas</h4>
+      <input type="text" value="0" class="score" id="fouls1" />
+        <div class="scoreButtons">
+          <input type="button" value="-1 Falta" class="scoreButton" id="decreasefouls1" />
+          <input type="button" value="+1 Falta" class="scoreButton" id="increasefouls1" />
+        </div>
+        </div>
+    </div>
+    <div id="col2">
+       <div id="faltas">
+        	<h4 class="teamName">Período</h4>
+      <input type="text" value="1" class="tempo" id="periodo" />
+        <div class="scoreButtons">
+          <input type="button" value="-1" class="scoreButton" id="decreaseperiodo" />
+          <input type="button" value="+1" class="scoreButton" id="increaseperiodo" />
+        </div>
+        </div>
+        <img src="lbca.png" id="marca">
+      </div>
+          <div id="col3">
+        <input type="text" value="Visitante" class="teamName" id="visitante" />
+        <input type="text" value="0" class="score" id="score2" />
+        <div class="scoreButtons">
+          <input type="button" value="-1 Ponto" class="scoreButton" id="decreaseTeam2" />
+          <input type="button" value="+1 Ponto" class="scoreButton" id="increaseTeam2" />
+          <input type="button" value="+2 Pontos" class="scoreButton" id="increase2Team2" />
+          <input type="button" value="+3 Pontos" class="scoreButton" id="increase3Team2" />
+        </div>
+        <div id="faltas">
+        	<h4 class="teamName">Faltas</h4>
+      <input type="text" value="0" class="score" id="fouls2" />
+        <div class="scoreButtons">
+          <input type="button" value="-1 Falta" class="scoreButton" id="decreasefouls2" />
+          <input type="button" value="+1 Falta" class="scoreButton" id="increasefouls2" />
+        </div>
+        </div>
+      </div>
+    </div>
+   
+    
+  </div>
+  
+  <script type="text/javascript">
+    $(document).ready(function() {
+        var timer = new Timer();
+        var $timer = $('#timer');
+        var $start = $('#start');
+        var $pause = $('#pause');
+        var $restart = $('#restart');
+        var $score1 = $('#score1');
+        var $score2 = $('#score2');
+        var $fouls1 = $('#fouls1');
+        var $fouls2 = $('#fouls2');
+        var $periodo = $('#periodo');
+        $('body').append('<style></style>');
+
+        
+        $(window).resize(function() {
+            resizeFonts();
+        });
+        
+        var format = function(value){
+            while(value.length < 2) {
+                value = '0' + value;
+            }
+            return value;
+        }
+            
+        var onMaskInComplete = function() {
+            var regex = /[_]/g;
+            var splitTime = $timer.val().split(':');
+            var minutes = splitTime[0].replace(regex, '');
+            var seconds = splitTime[1].replace(regex, '');
+                        
+            $timer.val(format(String(minutes)) + ':' + format(String(seconds)));
+        }
+        
+        $timer.inputmask({mask: '99:99', placeholder: '_', onincomplete: onMaskInComplete});
+
+        var resizeFonts = function() {
+            $('input[type="text"]').each(function() {
+                var $this = $(this);
+                var len = $this.val().length;
+                var width = $this.width() / len;
+                var height = $this.height();
+                $this.css('font-size', Math.min(width, height));
+            });
+        }
+
+        resizeFonts();
+        
+        var updateTimer = function(time) {
+            $timer.val(time);
+        }
+        
+        var toggleControls = function() {
+        }
+        
+        $start.click(function() {
+            toggleControls();
+            timer.setTime($timer.val());
+            timer.subscribeToEmitter(updateTimer);
+            timer.start();
+        })
+        
+        $pause.click(function() {
+            toggleControls();
+            timer.pause();
+        });
+        
+        $timer.change(function() {
+            timer.setTime($timer.val());
+        });
+        
+        $restart.click(function() {
+			location.reload();
+        });
+        
+        var updateScore = function ($selector, value) {
+            $selector.val(Number($selector.val()) + value);
+        }
+        
+        $('#decreaseTeam1').click(function() {
+            updateScore($score1, -1);
+        });
+        
+        $('#increaseTeam1').click(function() {
+            updateScore($score1, 1);
+        });
+        
+        $('#increase2Team1').click(function() {
+            updateScore($score1, 2);
+        });
+        
+        $('#increase3Team1').click(function() {
+            updateScore($score1, 3);
+        });
+        
+        $('#decreaseTeam2').click(function() {
+            updateScore($score2, -1);
+        });
+        
+        $('#increaseTeam2').click(function() {
+            updateScore($score2, 1);
+        });
+        
+        $('#increase2Team2').click(function() {
+            updateScore($score2, 2);
+        });
+        
+        $('#increase3Team2').click(function() {
+            updateScore($score2, 3);
+        });
+        
+        $('#decreasefouls1').click(function() {
+            updateScore($fouls1, -1);
+        });
+        
+        $('#increasefouls1').click(function() {
+            updateScore($fouls1, 1);
+        });
+        
+        $('#decreasefouls2').click(function() {
+            updateScore($fouls2, -1);
+        });
+        
+        $('#increasefouls2').click(function() {
+            updateScore($fouls2, 1);
+        });
+        
+        $('#decreaseperiodo').click(function() {
+            updateScore($periodo, -1);
+        });
+        
+        $('#increaseperiodo').click(function() {
+            updateScore($periodo, 1);
+        });
+    });
+  </script>
+  
+</body>
+</html>

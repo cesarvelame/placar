@@ -1,0 +1,118 @@
+* { margin: 0; padding: 0; }
+
+/* *** General Styles *** */
+html {
+    height: 100%;
+}
+
+body  {
+    background-color: #000;
+    text-align: center;
+    height: 100%;
+    overflow: hidden;
+    font-family:Arial, Verdana, sans-serif;
+}
+
+/* *** Layout *** */
+
+.container { 
+    background-color: #000;
+    height:100%;
+}
+
+#top {
+    width: 100%;
+    float: left;
+    height: 25%;
+}
+
+#col1 {
+    width: 40%;
+    float: left;
+    height: 40%;
+}
+
+#col2 {
+    width: 20%;
+    float: left;
+    height: 50%;
+}
+
+#col3 {
+    width: 40%;
+    float: right;
+    height: 40%;
+}
+
+#faltas {
+    width: 100%;
+    float: left;
+    height: 60%;
+    margin-top:1em;
+}
+
+#marca {
+    height: 70%;
+    margin-top:1em;
+}
+
+#timer,
+.teamName,
+.tempo,
+.score {
+    background-color: #000;
+    color: white;
+    font-weight: bold;
+    border: none;
+    text-align: center;
+    width: 100%;
+}
+
+#timer {
+    height: 70%;
+    color: red;
+}
+
+#controls {
+    height: 10%;
+    color: white;
+}
+
+.teamName {
+    height: 15%;
+}
+
+.score {
+    height: 65%;
+    color: yellow;
+}
+
+.tempo {
+    height: 65%;
+    color: red;
+}
+
+.scoreButtons {
+    height: 20%;
+}
+
+.scoreButton {
+    min-height: 50%;
+    width: 15%;
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    margin: 1em;
+}
+
+.scoreButton:hover {
+    border: 1px solid yellow;
+}
+
+
+.scoreButton:active {
+    border: 1px solid yellow;
+    background-color: yellow;
+    color: black;
+}
