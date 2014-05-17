@@ -16,6 +16,14 @@
   <script type="text/javascript" src="javascript/inputmask/jquery.inputmask.js"></script>
   <script type="text/javascript" src="javascript/inputmask/jquery.inputmask.extensions.js"></script>
 
+<script language="javascript">
+function playIt()
+{
+   document.getElementById("forEmbed").innerHTML="<embed src='buzina.wav' autostart=true loop=false volume=100 hidden=true>";
+   return true;
+}
+</script>
+
 </head>
 
 <body>
@@ -26,6 +34,9 @@
       <input type="button" value="Iniciar" class="scoreButton" id="start" accesskey="i"/>
       <input type="button" value="Parar" class="scoreButton" id="pause" accesskey="p"/>
       <input type="button" value="Reiniciar Partida" class="scoreButton" id="restart" accesskey="r"/>
+      <button type="button" onclick="playIt()" class="scoreButton">Buzina</button>
+<div id="forEmbed">
+</div>
       </div>
     </div>
     <div id="col1">
